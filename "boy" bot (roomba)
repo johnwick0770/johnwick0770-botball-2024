@@ -32,3 +32,13 @@ void turnLeft(int speed, int time)
     create_disconnect();
 
 }
+
+void servomove(int port, int pos)
+{
+   	enable_servos();
+    set_servo_position(port, pos);
+    
+}
+
+
+
