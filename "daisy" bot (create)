@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <kipr/wombat.h>
+
+void drive(int power, int time){
+    motor(1,power);
+    motor(3,power);
+    msleep(time);
+}
+
+void left(int power, int time){
+    motor(3,0);
+    motor(1,power);
+    msleep(time);
+}
+
+void right(int power, int time){
+    motor(3,power);
+    motor(1,0);
+    msleep(time);
+}
+
+void arm(int degree, int time){
+    enable_servos();
+    set_servo_position(3, degree);
+    msleep(time);
+    ao();
+}
+
+void claw(int degree, int time){
+    enable_servos();
+    set_servo_position(2, degree);
+    msleep(time);
+    ao();
+}
+
+//arm degree = degree<90 lower, degree>90 higher
+//claw degree = degree<90 open, degree>90 close
+//remember to calibrate light sensor before running bot   
+
+int main(){
+  //starting position
+    wait_for_light(0);
+    arm(1500,1000);
+    claw(500,1000);
+  //Bot turns + hits green noodles
+    left(100,1000);
+    drive(100,2000);
+  //Bot turns + drives towards tower to prep grabbing yellow cube
+    right(100,450);
+    drive(100,3000);
+    return 0;
+}
