@@ -40,5 +40,12 @@ void servomove(int port, int pos)
     
 }
 
+#include <kipr/botball.h>
 
+int main() {
+    motor(0, 25);
+    msleep(5000);
+    ao(); // This stops all motors
+    return 0;
+}
 
