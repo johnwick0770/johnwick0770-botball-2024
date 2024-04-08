@@ -1,0 +1,65 @@
+#include <kipr/wombat.h>
+void initialization(){
+    enable_servos();
+    arm(1400,1000);
+    claw(500,1000);
+}
+            
+void drive(int power, int time){
+    motor(1,power);
+    motor(3,power);
+    msleep(time);
+}
+
+void left(int power, int time){
+    motor(3,power);
+    motor(1,-power);
+    msleep(time);
+}
+
+void right(int power, int time){
+    motor(3,-power);
+    motor(1,power);
+    msleep(time);
+}
+
+void arm(int degree, int time){
+    enable_servos();
+    set_servo_position(3, degree);
+    msleep(time);
+    ao();
+}
+
+void claw(int degree, int time){
+    enable_servos();
+    set_servo_position(2, degree);
+    msleep(time);
+    ao();
+}
+//arm degree = degree<90 lower, degree>90 higher
+//claw degree = degree<90 open, degree>90 close
+//Calibrate wait_for_light everytime you run it [Find by clicking program -> program name]
+   
+int main(){
+    //wait_for_light(0);
+    //make starting position less then 20in tall
+    initialization();
+    
+    //move to hit green noodles
+   // arm(1450,1000);
+   // claw(200,1000);
+    drive(50,100);
+    left(60,800);
+    drive(90,1000);
+    right(100,500);
+    drive(100,3200);
+    arm(1800,1000);
+    claw(500,1000);
+    
+    //bump sensor
+    if (digital(9) == 1){
+        drive(-100,500);
+    }
+    
+    return 0;
+}
